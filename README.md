@@ -1,2 +1,1 @@
-# Sol
-General solution
+# solution
