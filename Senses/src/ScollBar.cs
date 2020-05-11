@@ -34,7 +34,7 @@ namespace Senses
         internal override void Draw(PixelDrawer pixelDrawer)
         {
             base.Draw(pixelDrawer);
-            Console.WriteLine("scrollPosition {0}", scrollPosition);
+            //Console.WriteLine("scrollPosition {0}", scrollPosition);
             pixelDrawer.DrawRectangle(scrollPosition, scrollSize, theme.Foreground);
         }
     }

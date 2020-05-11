@@ -51,7 +51,7 @@ namespace Senses
                 new Position(this.position.x, this.position.y+constrainedSize.height));
             verticalScrollBar.Arrange(new Size(16, constrainedSize.height),
                 new Position(this.position.x + constrainedSize.width, this.position.y));
-            Console.WriteLine("horizontalScrollBar.maxValue {0}", horizontalScrollBar.maxValue);
+            //Console.WriteLine("horizontalScrollBar.maxValue {0}", horizontalScrollBar.maxValue);
             HorizontalValue = horizontalScrollBar.maxValue / 2;
         }
         internal override void Draw(PixelDrawer pixelDrawer)
