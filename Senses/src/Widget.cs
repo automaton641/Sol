@@ -27,7 +27,10 @@ namespace Senses
             this.size.Update(size);
             this.position.Update(position);
         }
-
+        internal virtual Size DesiredSize
+        {
+            get {return new Size();}
+        }
         internal virtual void Draw(PixelDrawer pixelDrawer)
         {
             pixelDrawer.DrawRectangle(position, size, theme.Background);

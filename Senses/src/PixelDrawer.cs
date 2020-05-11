@@ -4,6 +4,8 @@ namespace Senses
     {
         internal Size size;
         internal Position position;
+        internal Size constrainedSize;
+        internal Position constrainedPosition;
         internal uint[] pixels;
         public PixelDrawer(uint[] pixels, int width, int height)
         {
@@ -17,9 +19,17 @@ namespace Senses
         }
         public void DrawPixel(int x, int y, SColor color)
         {
-            if (x < 0 || y < 0 || x >= size.width || y >= size.height)
+            if (x < 0|| y < 0 || x >= size.width || y >= size.height)
             {
                 return;
+            }
+            if (constrainedPosition != null && constrainedSize != null)
+            {
+                if (x < constrainedPosition.x || y < constrainedPosition.y ||
+                    x >= constrainedPosition.x + constrainedSize.width || y >= constrainedPosition.y + constrainedSize.height)
+                {
+                    return;
+                }
             }
             int index = y * size.width + x;
             pixels[index] = color.color;

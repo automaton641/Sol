@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,6 +13,7 @@ namespace Senses
         internal Size size;
         internal Texture2D texture;
         internal uint[] pixels;
+        MouseState mouseState;
         public MonoGameInterface()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -30,6 +32,8 @@ namespace Senses
             texture = new Texture2D(GraphicsDevice, size.width, size.height, false, SurfaceFormat.Color);
             pixels = new uint[size.width * size.height];
             window.pixelDrawer = new PixelDrawer(pixels, size.width, size.height);
+            
+        
             base.Initialize();
         }
 
@@ -46,7 +50,36 @@ namespace Senses
                 Exit();
 
             // TODO: Add your update logic here
+            mouseState = Mouse.GetState();
+            if (window.mouseState.dictionary[Button.LeftMouse] == SButtonState.Released)
+            {
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    window.MouseStateUpdate(Button.LeftMouse, SButtonState.Pressed);
+                }
+            }
+            else
+            {
+                if (mouseState.LeftButton == ButtonState.Released)
+                {
+                    window.MouseStateUpdate(Button.LeftMouse, SButtonState.Released);
+                }
+            }
 
+            if (window.mouseState.dictionary[Button.RightMouse] == SButtonState.Released)
+            {
+                if (mouseState.RightButton == ButtonState.Pressed)
+                {
+                    window.MouseStateUpdate(Button.RightMouse, SButtonState.Pressed);
+                }
+            }
+            else
+            {
+                if (mouseState.RightButton == ButtonState.Released)
+                {
+                    window.MouseStateUpdate(Button.RightMouse, SButtonState.Released);
+                }
+            }
             base.Update(gameTime);
         }
 

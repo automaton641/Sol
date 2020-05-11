@@ -6,6 +6,22 @@ namespace Senses
     {
         internal Bitmap textImage;
         internal string text;
+        internal bool centerHorizontally;
+        public TextWidget(string text, Theme theme) : base(theme)
+        {
+            Build(text, true);
+            
+        }
+        public TextWidget(string text, bool centerHorizontally, Theme theme) : base(theme)
+        {
+            Build(text, centerHorizontally);
+        }
+        internal void Build(string text, bool centerHorizontally)
+        {
+            this.text = text;
+            this.centerHorizontally = centerHorizontally;
+            UpDateTextImage();
+        }
         public string Text
         {
             set 
@@ -19,11 +35,6 @@ namespace Senses
             }
             get {return text;}
         }
-        public TextWidget(string text, Theme theme) : base(theme)
-        {
-            this.text = text;
-            UpDateTextImage();
-        }
         internal void UpDateTextImage()
         {
             SColor foreground = theme.Foreground;
@@ -31,10 +42,18 @@ namespace Senses
             Color systemBackground = Color.FromArgb(0,0,0,0);
             textImage = DrawText(text, theme.Font, systemForeground, systemBackground);
         }
+        internal override Size DesiredSize
+        {
+            get {return new Size(textImage.Width, textImage.Height);}
+        }
         internal override void Draw(PixelDrawer pixelDrawer)
         {
             base.Draw(pixelDrawer);
-            int x0 = position.x + size.width / 2 - textImage.Width / 2;
+            int x0 = position.x;
+            if (centerHorizontally)
+            {
+                x0 += size.width / 2 - textImage.Width / 2;
+            }
             int y0 = position.y + size.height / 2 - textImage.Height / 2; 
             Color systemColor;
             SColor color;
@@ -45,7 +64,14 @@ namespace Senses
                     systemColor = textImage.GetPixel(x,y);
                     if (systemColor.A > 0)
                     {
-                        color = new SColor(systemColor.R, systemColor.G, systemColor.B);
+                        //Console.WriteLine(systemColor);
+                        color = new SColor
+                        (
+                            (byte)(systemColor.R*systemColor.A/255),
+                            (byte)(systemColor.G*systemColor.A/255), 
+                            (byte)(systemColor.B*systemColor.A/255)
+                        );
+                        //Console.WriteLine(color);
                         pixelDrawer.DrawPixel(x0 + x, y0 + y, color);
                     }
                     //Console.WriteLine("pixel {0}, {1} = {2}", x, y, textImage.GetPixel(x,y));

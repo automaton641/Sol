@@ -18,7 +18,8 @@ namespace Senses
             widgets = new List<Widget>();
             growAdder = 0;
         }
-        internal override void Arrange(Size size, Position position) {
+        internal override void Arrange(Size size, Position position) 
+        {
             base.Arrange(size, position);
             //Console.WriteLine(this.size);
             List<Size> sizes = new List<Size>();

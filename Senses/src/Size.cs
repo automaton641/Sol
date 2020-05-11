@@ -4,6 +4,10 @@ namespace Senses
     {
         internal int width;
         internal int height;
+        public Size()
+        {
+            
+        }
         public Size(int width, int height)
         {
             this.width = width;

@@ -10,11 +10,23 @@ namespace Senses
         {
             this.color= color;
             bytes = BitConverter.GetBytes(color);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
         }
         public SColor(byte red, byte green, byte blue)
         {
             bytes = new byte[4]{0xff, red, green, blue};
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
             this.color = BitConverter.ToUInt32(bytes, 0);
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(bytes);
+            }
         }
         public byte Alpha
         {
@@ -32,6 +44,11 @@ namespace Senses
         {
             get{ return bytes[3]; }
         }
-        
+        public override string ToString()
+        {
+            return "Color " + color.ToString("x") +
+                "Color " + Alpha + " " + Red + " " + Green + " " + Blue;
+
+        }
     }
 }
